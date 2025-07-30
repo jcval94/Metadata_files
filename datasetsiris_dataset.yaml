@@ -1,0 +1,197 @@
+# datasets/iris.yaml
+# =========================================================
+#  PLANTILLA COMPLETA – Dataset Iris
+# =========================================================
+identity:
+  dataset_id: "urn:uci:iris"
+  version: "2025-07-25"
+  label_i18n:  {es: "Dataset Iris", en: "Iris Dataset"}
+  description_i18n:
+    es: "Conjunto clásico de medidas de sépalos y pétalos de tres especies de Iris."
+    en: "Classic dataset of sepal and petal measurements for three Iris species."
+  owner_contact: null
+
+storage:
+  location: null
+  file_format: "CSV"
+  partitioning: []
+
+temporal_coverage:
+  start: null
+  end: null
+  update_frequency: "STATIC"
+
+var_defaults:
+  timezone: null
+  allowed_nulls_pct: 0.0
+
+# ──────────────────────────────────────────────────────────
+#  SCHEMA (todas las variables inline)
+# ──────────────────────────────────────────────────────────
+schema:
+
+# 1️⃣ FLOAT – sepal_length
+  - identity:
+      variable_id: "urn:uci:iris:var:sepal_length"
+      label_i18n: {es: "Longitud del sépalo", en: "Sepal length"}
+      description_i18n:
+        es: "Longitud del sépalo de la flor en centímetros."
+        en: "Sepal length of the flower in centimetres."
+      tags: ["raw","ml-feature"]
+    type:
+      logical_type: float
+      physical_type: float64
+      measurement_scale: ratio
+      unit_label: "cm"
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: 4.3, max: 7.9, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance: {derivation: null, lineage_sources: [], lineage_job_id: null}
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 2️⃣ FLOAT – sepal_width
+  - identity:
+      variable_id: "urn:uci:iris:var:sepal_width"
+      label_i18n: {es: "Ancho del sépalo", en: "Sepal width"}
+      description_i18n:
+        es: "Ancho del sépalo de la flor en centímetros."
+        en: "Sepal width of the flower in centimetres."
+      tags: ["raw","ml-feature"]
+    type:
+      logical_type: float
+      physical_type: float64
+      measurement_scale: ratio
+      unit_label: "cm"
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: 2.0, max: 4.4, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance: {derivation: null, lineage_sources: [], lineage_job_id: null}
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 3️⃣ FLOAT – petal_length
+  - identity:
+      variable_id: "urn:uci:iris:var:petal_length"
+      label_i18n: {es: "Longitud del pétalo", en: "Petal length"}
+      description_i18n:
+        es: "Longitud del pétalo de la flor en centímetros."
+        en: "Petal length of the flower in centimetres."
+      tags: ["raw","ml-feature"]
+    type:
+      logical_type: float
+      physical_type: float64
+      measurement_scale: ratio
+      unit_label: "cm"
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: 1.0, max: 6.9, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance: {derivation: null, lineage_sources: [], lineage_job_id: null}
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 4️⃣ FLOAT – petal_width
+  - identity:
+      variable_id: "urn:uci:iris:var:petal_width"
+      label_i18n: {es: "Ancho del pétalo", en: "Petal width"}
+      description_i18n:
+        es: "Ancho del pétalo de la flor en centímetros."
+        en: "Petal width of the flower in centimetres."
+      tags: ["raw","ml-feature"]
+    type:
+      logical_type: float
+      physical_type: float64
+      measurement_scale: ratio
+      unit_label: "cm"
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: 0.1, max: 2.5, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance: {derivation: null, lineage_sources: [], lineage_job_id: null}
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 5️⃣ CATEGORICAL – species
+  - identity:
+      variable_id: "urn:uci:iris:var:species"
+      label_i18n: {es: "Especie", en: "species"}
+      description_i18n:
+        es: "Categoría numérica que indica la especie de la flor (0 = Setosa, 1 = Versicolor, 2 = Virginica)."
+        en: "Numeric category indicating the flower species (0 = Setosa, 1 = Versicolor, 2 = Virginica)."
+      tags: ["target","categorical","ml-label"]
+    type:
+      logical_type: categorical
+      physical_type: int8
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: [0, 1, 2]
+        labels:
+          0: "Setosa"
+          1: "Versicolor"
+          2: "Virginica"
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance: {derivation: null, lineage_sources: [], lineage_job_id: null}
+    actionability:
+      increase_difficulty: 0
+      decrease_difficulty: 0
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null

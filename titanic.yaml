@@ -1,0 +1,597 @@
+# =========================================================
+#  RMS Titanic – Pasajeros y supervivencia
+# =========================================================
+identity:
+  dataset_id:  "urn:demo:titanic"
+  version:     "2025-07-28"
+  label_i18n:  {es: "Pasajeros RMS Titanic", en: "RMS Titanic passengers"}
+  description_i18n:
+    es: "Dataset clásico con información demográfica, de viaje y de supervivencia de los 2 224 pasajeros y tripulación del RMS Titanic (1912)."
+    en: "Classic dataset with demographic, travel and survival information for the 2,224 passengers and crew aboard RMS Titanic (1912)."
+  owner_contact: "data-team@example.com"
+
+storage:
+  location:     null
+  file_format:  "CSV"
+  partitioning: []
+
+temporal_coverage:
+  start: "1912-04-10"
+  end:   "1912-04-15"
+  update_frequency: "STATIC"
+
+var_defaults:
+  timezone: null
+  allowed_nulls_pct: 0.0
+
+# ──────────────────────────────────────────────────────────
+#  SCHEMA
+# ──────────────────────────────────────────────────────────
+schema:
+
+# 1️⃣ BOOLEAN – survived
+  - identity:
+      variable_id: "urn:demo:titanic:var:SURVIVED"
+      label_i18n: {es: "¿Sobrevivió?", en: "Survived"}
+      description_i18n:
+        es: "Indicador 1 si el pasajero sobrevivió al hundimiento."
+        en: "Flag set to 1 when the passenger survived the sinking."
+      tags: ["target", "boolean"]
+    type:
+      logical_type: boolean
+      physical_type: int8
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: [0, 1]
+        labels: {0: "No", 1: "Sí"}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 5      # hecho histórico
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: "Evento histórico irreversible"
+      last_change_event: null
+
+# 2️⃣ ORDINAL – pclass
+  - identity:
+      variable_id: "urn:demo:titanic:var:PCLASS"
+      label_i18n: {es: "Clase de boleto (num.)", en: "Ticket class (num.)"}
+      description_i18n:
+        es: "Clase de pasaje: 1 = Primera, 2 = Segunda, 3 = Tercera."
+        en: "Passenger ticket class: 1 = First, 2 = Second, 3 = Third."
+      tags: ["fare_class", "ordinal"]
+    type:
+      logical_type: categorical
+      physical_type: int8
+      measurement_scale: ordinal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: [1, 2, 3]
+        labels:
+          1: "Primera"
+          2: "Segunda"
+          3: "Tercera"
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 2      # upgrade pagado
+      decrease_difficulty: 1
+      expected_timeframe_days: 0
+      required_resources: {money: 2, time: 1, influence: 0, discipline: 0}
+      side_effects: "Cambio en tarifa y comodidades"
+      last_change_event: null
+
+# 3️⃣ CATEGORICAL – sex
+  - identity:
+      variable_id: "urn:demo:titanic:var:SEX"
+      label_i18n: {es: "Sexo", en: "Sex"}
+      description_i18n:
+        es: "Sexo biológico declarado del pasajero."
+        en: "Passenger’s stated biological sex."
+      tags: ["demographic", "protected_attr"]
+    type:
+      logical_type: categorical
+      physical_type: "VARCHAR(10)"
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: ["male", "female"]
+        labels: {male: "Hombre", female: "Mujer"}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 4️⃣ FLOAT – age
+  - identity:
+      variable_id: "urn:demo:titanic:var:AGE"
+      label_i18n: {es: "Edad", en: "Age"}
+      description_i18n:
+        es: "Edad del pasajero en años (decimales)."
+        en: "Passenger age in years (decimal)."
+      tags: ["demographic", "numeric"]
+    type:
+      logical_type: float
+      physical_type: float64
+      measurement_scale: ratio
+      unit_label: "years"
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: 0.0, max: 80.0, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 20.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 5️⃣ INTEGER – sibsp
+  - identity:
+      variable_id: "urn:demo:titanic:var:SIBSP"
+      label_i18n: {es: "Hermanos / cónyuge a bordo", en: "Siblings/spouse aboard"}
+      description_i18n:
+        es: "Número de hermanos y/o cónyuge que viajan con el pasajero."
+        en: "Number of siblings and/or spouse travelling with the passenger."
+      tags: ["family", "numeric"]
+    type:
+      logical_type: integer
+      physical_type: int8
+      measurement_scale: ratio
+      unit_label: "count"
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: 0, max: 8, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 4      # comprar boletos adicionales
+      decrease_difficulty: 3
+      expected_timeframe_days: 1
+      required_resources: {money: 2, time: 1, influence: 1, discipline: 0}
+      side_effects: "Impacto familiar y de costos"
+      last_change_event: null
+
+# 6️⃣ INTEGER – parch
+  - identity:
+      variable_id: "urn:demo:titanic:var:PARCH"
+      label_i18n: {es: "Padres / hijos a bordo", en: "Parents/children aboard"}
+      description_i18n:
+        es: "Número de padres y/o hijos que viajan con el pasajero."
+        en: "Number of parents and/or children travelling with the passenger."
+      tags: ["family", "numeric"]
+    type:
+      logical_type: integer
+      physical_type: int8
+      measurement_scale: ratio
+      unit_label: "count"
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: 0, max: 6, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 4
+      decrease_difficulty: 3
+      expected_timeframe_days: 1
+      required_resources: {money: 2, time: 1, influence: 1, discipline: 0}
+      side_effects: "Impacto familiar y de costos"
+      last_change_event: null
+
+# 7️⃣ FLOAT – fare
+  - identity:
+      variable_id: "urn:demo:titanic:var:FARE"
+      label_i18n: {es: "Tarifa pagada (£)", en: "Fare (£)"}
+      description_i18n:
+        es: "Importe del boleto pagado en libras esterlinas."
+        en: "Ticket fare amount in British pounds."
+      tags: ["monetary", "numeric"]
+    type:
+      logical_type: float
+      physical_type: float64
+      measurement_scale: ratio
+      unit_label: "GBP"
+      format_pattern: "decimal(10,4)"
+      timezone: null
+    domain:
+      numeric: {min: 0.0, max: 512.3292, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 1      # pagar extra
+      decrease_difficulty: 2      # negociar / downgrade
+      expected_timeframe_days: 0
+      required_resources: {money: 1, time: 0, influence: 0, discipline: 0}
+      side_effects: "Afecta clase y ubicación"
+      last_change_event: null
+
+# 8️⃣ CATEGORICAL – embarked
+  - identity:
+      variable_id: "urn:demo:titanic:var:EMBARKED"
+      label_i18n: {es: "Puerto de embarque (código)", en: "Port of embarkation (code)"}
+      description_i18n:
+        es: "Puerto donde el pasajero abordó: C = Cherbourg, Q = Queenstown, S = Southampton."
+        en: "Port where the passenger boarded: C = Cherbourg, Q = Queenstown, S = Southampton."
+      tags: ["route", "categorical"]
+    type:
+      logical_type: categorical
+      physical_type: "CHAR(1)"
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: ["C", "Q", "S"]
+        labels: {C: "Cherbourg", Q: "Queenstown", S: "Southampton"}
+      pattern: "^[CQS]$"
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.5
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 4      # logística compleja
+      decrease_difficulty: 4
+      expected_timeframe_days: 2
+      required_resources: {money: 2, time: 2, influence: 1, discipline: 1}
+      side_effects: "Requiere transporte alterno"
+      last_change_event: null
+
+# 9️⃣ CATEGORICAL – class
+  - identity:
+      variable_id: "urn:demo:titanic:var:CLASS"
+      label_i18n: {es: "Clase de boleto (texto)", en: "Ticket class (text)"}
+      description_i18n:
+        es: "Clase descriptiva del pasaje: First, Second o Third."
+        en: "Descriptive ticket class: First, Second or Third."
+      tags: ["fare_class", "categorical"]
+    type:
+      logical_type: categorical
+      physical_type: "VARCHAR(10)"
+      measurement_scale: ordinal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: ["First", "Second", "Third"]
+        labels:
+          First: "Primera"
+          Second: "Segunda"
+          Third: "Tercera"
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: "Mapeo de PCLASS → texto"
+      lineage_sources: ["urn:demo:titanic:var:PCLASS"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 2
+      decrease_difficulty: 1
+      expected_timeframe_days: 0
+      required_resources: {money: 2, time: 1, influence: 0, discipline: 0}
+      side_effects: "Cambio en comodidades y tarifa"
+      last_change_event: null
+
+# 🔟 CATEGORICAL – who
+  - identity:
+      variable_id: "urn:demo:titanic:var:WHO"
+      label_i18n: {es: "Perfil demográfico", en: "Demographic profile"}
+      description_i18n:
+        es: "Perfil man/woman/child empleado por Seaborn."
+        en: "Convenience profile man/woman/child used by Seaborn."
+      tags: ["derived", "categorical"]
+    type:
+      logical_type: categorical
+      physical_type: "VARCHAR(10)"
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: ["man", "woman", "child"]
+        labels:
+          man: "Hombre adulto"
+          woman: "Mujer adulta"
+          child: "Niño/a"
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: "Regla: age < 16 → child; else sex"
+      lineage_sources: ["urn:demo:titanic:var:AGE", "urn:demo:titanic:var:SEX"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 1️⃣1️⃣ BOOLEAN – adult_male
+  - identity:
+      variable_id: "urn:demo:titanic:var:ADULT_MALE"
+      label_i18n: {es: "¿Hombre adulto?", en: "Adult male?"}
+      description_i18n:
+        es: "Indicador True si sex = male y age ≥ 16."
+        en: "True when sex = male and age ≥ 16."
+      tags: ["derived", "boolean"]
+    type:
+      logical_type: boolean
+      physical_type: bool
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: [false, true]
+        labels: {false: "No", true: "Sí"}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: "sex == 'male' & age ≥ 16"
+      lineage_sources: ["urn:demo:titanic:var:AGE", "urn:demo:titanic:var:SEX"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 1️⃣2️⃣ CATEGORICAL – deck
+  - identity:
+      variable_id: "urn:demo:titanic:var:DECK"
+      label_i18n: {es: "Cubierta", en: "Deck"}
+      description_i18n:
+        es: "Letra de la cubierta del camarote asignado (A-G); valores faltantes indican camarote sin identificar."
+        en: "Letter of the passenger’s cabin deck (A-G); missing when cabin unknown."
+      tags: ["cabin", "categorical", "high_nulls"]
+    type:
+      logical_type: categorical
+      physical_type: "CHAR(1)"
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: false
+        codes: ["A", "B", "C", "D", "E", "F", "G"]
+        labels: {}
+      pattern: "^[A-G]$"
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 77.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: ["historical_records.titanic_manifest"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 4      # reasignar camarote limitado
+      decrease_difficulty: 4
+      expected_timeframe_days: 1
+      required_resources: {money: 3, time: 2, influence: 2, discipline: 1}
+      side_effects: "Costos altos y disponibilidad limitada"
+      last_change_event: null
+
+# 1️⃣3️⃣ CATEGORICAL – embark_town
+  - identity:
+      variable_id: "urn:demo:titanic:var:EMBARK_TOWN"
+      label_i18n: {es: "Ciudad de embarque", en: "Embarkation town"}
+      description_i18n:
+        es: "Nombre de la ciudad desde la que el pasajero embarcó."
+        en: "City where the passenger boarded the ship."
+      tags: ["route", "categorical", "derived"]
+    type:
+      logical_type: categorical
+      physical_type: "VARCHAR(15)"
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: ["Cherbourg", "Queenstown", "Southampton"]
+        labels: {}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.5
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: "Mapeo de EMBARKED → nombre completo"
+      lineage_sources: ["urn:demo:titanic:var:EMBARKED"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 5      # derivado, mismo esfuerzo que EMBARKED
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 1️⃣4️⃣ CATEGORICAL – alive
+  - identity:
+      variable_id: "urn:demo:titanic:var:ALIVE"
+      label_i18n: {es: "¿Con vida?", en: "Alive"}
+      description_i18n:
+        es: "Etiqueta textual de supervivencia: yes / no."
+        en: "Textual survival label: yes / no."
+      tags: ["redundant", "categorical", "derived"]
+    type:
+      logical_type: categorical
+      physical_type: "VARCHAR(3)"
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: ["yes", "no"]
+        labels: {yes: "Sí", no: "No"}
+      pattern: "^(yes|no)$"
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: "Mapeo de SURVIVED → texto"
+      lineage_sources: ["urn:demo:titanic:var:SURVIVED"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+# 1️⃣5️⃣ BOOLEAN – alone
+  - identity:
+      variable_id: "urn:demo:titanic:var:ALONE"
+      label_i18n: {es: "¿Viajaba solo?", en: "Travelling alone?"}
+      description_i18n:
+        es: "True si sibsp = 0 y parch = 0."
+        en: "True when sibsp = 0 and parch = 0."
+      tags: ["family", "boolean", "derived"]
+    type:
+      logical_type: boolean
+      physical_type: bool
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [true, true]}
+      categorical:
+        closed: true
+        codes: [false, true]
+        labels: {false: "No", true: "Sí"}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: "sibsp == 0 & parch == 0"
+      lineage_sources: ["urn:demo:titanic:var:SIBSP", "urn:demo:titanic:var:PARCH"]
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 3      # añadir familiares
+      decrease_difficulty: 3
+      expected_timeframe_days: 1
+      required_resources: {money: 2, time: 1, influence: 1, discipline: 0}
+      side_effects: "Impacto en costos y logística familiar"
+      last_change_event: null
