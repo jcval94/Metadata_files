@@ -1,0 +1,315 @@
+# =========================================================
+#  METADATOS – Dataset «tips» (propinas en restaurante)
+# =========================================================
+
+identity:
+  dataset_id:  "urn:seaborn:tips"
+  version:     "2025-07-30"
+  label_i18n:  {es: "Propinas en Restaurante", en: "Restaurant Tips"}
+  description_i18n:
+    es: "Dataset clásico de propinas por mesa en un restaurante, empleado habitualmente para ejemplos de análisis estadístico en Python."
+    en: "Classic restaurant-tips dataset, widely used in Python statistical-analysis examples."
+  owner_contact: null
+
+storage:
+  location:     "seaborn.datasets"
+  file_format:  "CSV"
+  partitioning: []
+
+temporal_coverage:
+  start: null
+  end:   null
+  update_frequency: "STATIC"
+
+var_defaults:
+  timezone: null
+  allowed_nulls_pct: 0.0
+
+# ──────────────────────────────────────────────────────────
+#  BLOQUE BUSINESS / LLM GUIDANCE
+# ──────────────────────────────────────────────────────────
+business_context:
+  related_kpi: ["ingreso_propinas", "porcentaje_propina"]
+  business_impact: >
+    Conjunto base para demostraciones de análisis de propinas
+    y comportamiento de consumo en restaurantes.
+  preferred_chart: "scatter|boxplot"
+  usage_examples:
+    - "Estimación del porcentaje promedio de propina por sexo y día."
+    - "Ejemplo de regresión lineal entre total_bill y tip."
+llm_guidance:
+  primary_use_cases:
+    - "Generar descripciones automáticas del comportamiento de consumo"
+  suggest_summary_prompts:
+    - "Resume el comportamiento de propinas por día de la semana."
+  model_personas:
+    - name: "DataAnalyst"
+      tone: "Técnico, incluye cifras"
+      max_words: 200
+  columns_sensitive_for_llm: []
+
+# ──────────────────────────────────────────────────────────
+#  SCHEMA (todas las variables a continuación)
+# ──────────────────────────────────────────────────────────
+schema:
+
+  # 1️⃣ FLOAT – total_bill
+  - identity:
+      variable_id: "urn:seaborn:tips:TOTAL_BILL"
+      label_i18n: {es: "Cuenta total", en: "Total bill"}
+      description_i18n:
+        es: "Importe total de la cuenta antes de incluir la propina, expresado en USD."
+        en: "Total amount of the bill before tip, expressed in USD."
+      tags: ["monetary", "raw"]
+    type:
+      logical_type: float
+      physical_type: float64
+      measurement_scale: ratio
+      unit_label: "USD"
+      format_pattern: "decimal(7,2)"
+      timezone: null
+    domain:
+      numeric: {min: 0.0, max: null, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: []
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 1
+      decrease_difficulty: 1
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+  # 2️⃣ FLOAT – tip
+  - identity:
+      variable_id: "urn:seaborn:tips:TIP"
+      label_i18n: {es: "Propina", en: "Tip"}
+      description_i18n:
+        es: "Cantidad pagada como propina, en USD."
+        en: "Amount paid as tip, in USD."
+      tags: ["monetary", "raw"]
+    type:
+      logical_type: float
+      physical_type: float64
+      measurement_scale: ratio
+      unit_label: "USD"
+      format_pattern: "decimal(6,2)"
+      timezone: null
+    domain:
+      numeric: {min: 0.0, max: null, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: []
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 1
+      decrease_difficulty: 1
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+  # 3️⃣ CATEGÓRICA – sex
+  - identity:
+      variable_id: "urn:seaborn:tips:SEX"
+      label_i18n: {es: "Sexo", en: "Sex"}
+      description_i18n:
+        es: "Sexo del camarero o camarera que atendió la mesa."
+        en: "Sex of the server who attended the table."
+      tags: ["categorical", "demographic"]
+    type:
+      logical_type: categorical
+      physical_type: string
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [null, null]}
+      categorical:
+        closed: true
+        codes: ["Male", "Female"]
+        labels: {"Male": "Hombre", "Female": "Mujer"}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: []
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 5
+      decrease_difficulty: 5
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+  # 4️⃣ CATEGÓRICA – smoker
+  - identity:
+      variable_id: "urn:seaborn:tips:SMOKER"
+      label_i18n: {es: "Fumador", en: "Smoker"}
+      description_i18n:
+        es: "Indica si había fumadores en la mesa."
+        en: "Indicates whether there were smokers at the table."
+      tags: ["categorical", "behavior"]
+    type:
+      logical_type: categorical
+      physical_type: string
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [null, null]}
+      categorical:
+        closed: true
+        codes: ["Yes", "No"]
+        labels: {"Yes": "Fumador", "No": "No fumador"}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: []
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 3
+      decrease_difficulty: 3
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+  # 5️⃣ CATEGÓRICA – day
+  - identity:
+      variable_id: "urn:seaborn:tips:DAY"
+      label_i18n: {es: "Día", en: "Day"}
+      description_i18n:
+        es: "Día de la semana en que se registró la cuenta."
+        en: "Day of the week when the bill was recorded."
+      tags: ["categorical", "temporal"]
+    type:
+      logical_type: categorical
+      physical_type: string
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [null, null]}
+      categorical:
+        closed: true
+        codes: ["Thur", "Fri", "Sat", "Sun"]
+        labels:
+          Thur: "Jueves"
+          Fri: "Viernes"
+          Sat: "Sábado"
+          Sun: "Domingo"
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: []
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 1
+      decrease_difficulty: 1
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+  # 6️⃣ CATEGÓRICA – time
+  - identity:
+      variable_id: "urn:seaborn:tips:TIME"
+      label_i18n: {es: "Momento del día", en: "Time of day"}
+      description_i18n:
+        es: "Momento del día (almuerzo o cena) en que se atendió la mesa."
+        en: "Time of day (lunch or dinner) when the table was served."
+      tags: ["categorical", "temporal"]
+    type:
+      logical_type: categorical
+      physical_type: string
+      measurement_scale: nominal
+      unit_label: null
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: null, max: null, inclusive: [null, null]}
+      categorical:
+        closed: true
+        codes: ["Lunch", "Dinner"]
+        labels: {"Lunch": "Almuerzo", "Dinner": "Cena"}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: []
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 1
+      decrease_difficulty: 1
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
+
+  # 7️⃣ INTEGER – size
+  - identity:
+      variable_id: "urn:seaborn:tips:SIZE"
+      label_i18n: {es: "Número de comensales", en: "Party size"}
+      description_i18n:
+        es: "Número de comensales en la mesa."
+        en: "Number of diners at the table."
+      tags: ["count", "raw"]
+    type:
+      logical_type: integer
+      physical_type: int64
+      measurement_scale: ratio
+      unit_label: "diners"
+      format_pattern: null
+      timezone: null
+    domain:
+      numeric: {min: 1, max: null, inclusive: [true, true]}
+      categorical: {closed: false, codes: [], labels: {}}
+      pattern: null
+      date_range: {start: null, end: null}
+      allowed_nulls_pct: 0.0
+      unique: false
+      foreign_key: {dataset: null, variable: null}
+    provenance:
+      derivation: null
+      lineage_sources: []
+      lineage_job_id: null
+    actionability:
+      increase_difficulty: 1
+      decrease_difficulty: 1
+      expected_timeframe_days: null
+      required_resources: {money: 0, time: 0, influence: 0, discipline: 0}
+      side_effects: null
+      last_change_event: null
